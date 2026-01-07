@@ -156,11 +156,21 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
           </span>
         </label>
 
-        <div className="space-y-3 mt-2">
+        <div className="space-y-4 mt-2">
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-sm">Cortas</label>
-              <span className="text-sm font-medium">{formData.short}%</span>
+            <div className="flex items-center justify-between mb-2 gap-2">
+              <label className="text-sm font-medium flex-1">Cortas</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={formData.short}
+                  onChange={(e) => handleLengthChange('short', parseInt(e.target.value) || 0)}
+                  className="input input-bordered input-sm w-16 text-center"
+                />
+                <span className="text-sm font-medium w-8">%</span>
+              </div>
             </div>
             <input
               type="range"
@@ -168,22 +178,24 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
               max="100"
               value={formData.short}
               onChange={(e) => handleLengthChange('short', parseInt(e.target.value))}
-              className="range range-primary"
-            />
-            <input
-              type="number"
-              min="0"
-              max="100"
-              value={formData.short}
-              onChange={(e) => handleLengthChange('short', parseInt(e.target.value) || 0)}
-              className="input input-bordered input-sm w-20 mt-2"
+              className="range range-primary w-full"
             />
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-sm">Medias</label>
-              <span className="text-sm font-medium">{formData.medium}%</span>
+            <div className="flex items-center justify-between mb-2 gap-2">
+              <label className="text-sm font-medium flex-1">Medias</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={formData.medium}
+                  onChange={(e) => handleLengthChange('medium', parseInt(e.target.value) || 0)}
+                  className="input input-bordered input-sm w-16 text-center"
+                />
+                <span className="text-sm font-medium w-8">%</span>
+              </div>
             </div>
             <input
               type="range"
@@ -191,22 +203,24 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
               max="100"
               value={formData.medium}
               onChange={(e) => handleLengthChange('medium', parseInt(e.target.value))}
-              className="range range-primary"
-            />
-            <input
-              type="number"
-              min="0"
-              max="100"
-              value={formData.medium}
-              onChange={(e) => handleLengthChange('medium', parseInt(e.target.value) || 0)}
-              className="input input-bordered input-sm w-20 mt-2"
+              className="range range-primary w-full"
             />
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-sm">Largas</label>
-              <span className="text-sm font-medium">{formData.long}%</span>
+            <div className="flex items-center justify-between mb-2 gap-2">
+              <label className="text-sm font-medium flex-1">Largas</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={formData.long}
+                  onChange={(e) => handleLengthChange('long', parseInt(e.target.value) || 0)}
+                  className="input input-bordered input-sm w-16 text-center"
+                />
+                <span className="text-sm font-medium w-8">%</span>
+              </div>
             </div>
             <input
               type="range"
@@ -214,15 +228,7 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
               max="100"
               value={formData.long}
               onChange={(e) => handleLengthChange('long', parseInt(e.target.value))}
-              className="range range-primary"
-            />
-            <input
-              type="number"
-              min="0"
-              max="100"
-              value={formData.long}
-              onChange={(e) => handleLengthChange('long', parseInt(e.target.value) || 0)}
-              className="input input-bordered input-sm w-20 mt-2"
+              className="range range-primary w-full"
             />
           </div>
         </div>
@@ -246,12 +252,12 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
         </label>
       </div>
 
-      <div className="flex justify-between mt-6">
+      <div className="flex flex-col sm:flex-row justify-between gap-3 mt-6">
         <Button
           buttonProps={{
             children: 'Atrás',
             type: 'button',
-            className: 'btn-outline',
+            className: 'btn-outline w-full sm:w-auto',
             onClick: handleBack,
           }}
         />
@@ -259,7 +265,7 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
           buttonProps={{
             children: 'Guardar',
             type: 'submit',
-            className: 'btn-primary',
+            className: 'btn-primary w-full sm:w-auto',
             disabled: !isFormValid,
           }}
         />
