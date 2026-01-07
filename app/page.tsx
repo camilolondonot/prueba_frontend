@@ -47,7 +47,7 @@ export default function Home() {
   const handleDeleteClick = (id: string) => {
     const agent = agents.find((a) => a.id === id);
     if (agent) {
-      setAgentToDelete({ id, name: agent.nombre });
+      setAgentToDelete({ id, name: agent.name });
       setIsConfirmationOpen(true);
     }
   };
@@ -84,12 +84,12 @@ export default function Home() {
   // Mapear los agentes del store al formato que espera CardAgentIa
   const mappedAgents = agents.map((agent) => ({
     id: agent.id,
-    titulo: agent.nombre,
-    language: agent.idioma,
-    type: agent.tono,
-    short: agent.short,
-    medium: agent.medium,
-    long: agent.long,
+    titulo: agent.name,
+    language: agent.language,
+    type: agent.tone,
+    short: agent.responseLength.short,
+    medium: agent.responseLength.medium,
+    long: agent.responseLength.long,
   }));
 
   return (

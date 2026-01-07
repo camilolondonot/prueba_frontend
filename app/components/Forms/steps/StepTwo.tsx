@@ -71,9 +71,24 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
       };
 
       try {
+        // Obtener rules del localStorage si existe
+        const agentIdForRules = editingAgentId || Date.now().toString();
+        const savedRules = localStorage.getItem(`training_${agentIdForRules}`) || '';
+        
         if (editingAgentId) {
           // Modo edición
-          updateAgent(editingAgentId, agentData);
+          updateAgent(editingAgentId, {
+            name: agentData.nombre,
+            language: agentData.idioma,
+            tone: agentData.tono,
+            responseLength: {
+              short: agentData.short,
+              medium: agentData.medium,
+              long: agentData.long,
+            },
+            audioEnabled: agentData.audioEnabled,
+            rules: savedRules,
+          });
           const successMessage = 'Agente actualizado exitosamente!';
           setMessage('success', successMessage);
           
@@ -90,7 +105,7 @@ const StepTwo = ({ onSuccess }: StepTwoProps) => {
             }, 300);
           }
         } else {
-          // Modo creación
+          // Modo creación - el ID se genera en addAgent
           addAgent(agentData);
           const successMessage = 'Agente creado exitosamente!';
           setMessage('success', successMessage);

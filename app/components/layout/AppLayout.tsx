@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Header from './Header';
 import logo from '@/public/logo.svg';
+import logoFunnel from '@/public/funnelhot.svg';
 import Image from 'next/image';
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -39,7 +40,8 @@ export default function AppLayout({ children }: AppLayoutProps) {
       <div className="drawer-side is-drawer-close:overflow-visible">
         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
         <div className="flex min-h-full flex-col items-start bg-[#2D3249] is-drawer-close:w-14 is-drawer-open:w-64">
-          <Image src={logo} alt="Logo" className="h-auto w-10 mx-auto my-4" />
+          <Image src={logo} alt="Logo" className="h-auto w-10 mx-auto my-4 hidden lg:block" />
+          <Image src={logoFunnel} alt="Logo" className="h-auto w-30 mx-auto my-4 block lg:hidden" />
           <ul className="menu w-full grow">
             {/* List item */}
             <li>

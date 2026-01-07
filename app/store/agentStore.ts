@@ -3,14 +3,16 @@ import { persist } from 'zustand/middleware';
 
 export interface Agent {
   id: string;
-  nombre: string;
-  idioma: string;
-  tono: string;
-  short: number;
-  medium: number;
-  long: number;
+  name: string;
+  language: string;
+  tone: string;
+  responseLength: {
+    short: number;
+    medium: number;
+    long: number;
+  };
   audioEnabled: boolean;
-  createdAt: string;
+  rules: string;
 }
 
 interface FormData {
@@ -26,8 +28,9 @@ interface FormData {
 interface AgentStore {
   // Agentes (persistente)
   agents: Agent[];
-  addAgent: (agent: Omit<Agent, 'id' | 'createdAt'>) => void;
-  updateAgent: (id: string, agent: Omit<Agent, 'id' | 'createdAt'>) => void;
+  addAgent: (agent: { nombre: string; idioma: string; tono: string; short: number; medium: number; long: number; audioEnabled: boolean }) => void;
+  updateAgent: (id: string, agent: Omit<Agent, 'id'>) => void;
+  updateAgentRules: (id: string, rules: string) => void;
   deleteAgent: (id: string) => void;
   
   // Estado del formulario (NO persistente)
@@ -72,10 +75,22 @@ export const useAgentStore = create<AgentStore>()(
       
       // Acciones
       addAgent: (agentData) => {
+        const agentId = Date.now().toString();
+        // Obtener rules del localStorage si existe (usando el ID que se generará)
+        const savedRules = localStorage.getItem(`training_${agentId}`) || '';
+        
         const newAgent: Agent = {
-          ...agentData,
-          id: Date.now().toString(),
-          createdAt: new Date().toISOString(),
+          id: agentId,
+          name: agentData.nombre,
+          language: agentData.idioma,
+          tone: agentData.tono,
+          responseLength: {
+            short: agentData.short,
+            medium: agentData.medium,
+            long: agentData.long,
+          },
+          audioEnabled: agentData.audioEnabled,
+          rules: savedRules,
         };
         set((state) => ({
           agents: [...state.agents, newAgent],
@@ -83,10 +98,31 @@ export const useAgentStore = create<AgentStore>()(
       },
       
       updateAgent: (id, agentData) => {
+        // Obtener rules del localStorage si existe
+        const savedRules = localStorage.getItem(`training_${id}`) || '';
+        
         set((state) => ({
           agents: state.agents.map((agent) =>
             agent.id === id
-              ? { ...agent, ...agentData }
+              ? {
+                  id: agent.id,
+                  name: agentData.name,
+                  language: agentData.language,
+                  tone: agentData.tone,
+                  responseLength: agentData.responseLength,
+                  audioEnabled: agentData.audioEnabled,
+                  rules: savedRules || agentData.rules || agent.rules || '',
+                }
+              : agent
+          ),
+        }));
+      },
+      
+      updateAgentRules: (id, rules) => {
+        set((state) => ({
+          agents: state.agents.map((agent) =>
+            agent.id === id
+              ? { ...agent, rules }
               : agent
           ),
         }));
@@ -113,12 +149,12 @@ export const useAgentStore = create<AgentStore>()(
         set({
           currentStep: 1,
           formData: {
-            nombre: agent.nombre,
-            idioma: agent.idioma,
-            tono: agent.tono,
-            short: agent.short,
-            medium: agent.medium,
-            long: agent.long,
+            nombre: agent.name,
+            idioma: agent.language,
+            tono: agent.tone,
+            short: agent.responseLength.short,
+            medium: agent.responseLength.medium,
+            long: agent.responseLength.long,
             audioEnabled: agent.audioEnabled,
           },
           editingAgentId: agent.id,

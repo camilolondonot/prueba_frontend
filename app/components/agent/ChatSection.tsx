@@ -40,7 +40,11 @@ const ChatSection = ({ agentId }: ChatSectionProps) => {
     const delay = Math.random() * 1000 + 1000; // Entre 1000ms y 2000ms
 
     setTimeout(() => {
-      const responseType = getResponseType(agent.short, agent.medium, agent.long);
+      const responseType = getResponseType(
+        agent.responseLength.short,
+        agent.responseLength.medium,
+        agent.responseLength.long
+      );
       const responseContent = getRandomResponse(responseType);
 
       const assistantMessage: ChatMessage = {

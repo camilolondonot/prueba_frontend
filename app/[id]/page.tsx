@@ -66,20 +66,13 @@ export default function DetalleElemento({ params }: { params: Promise<{ id: stri
           <h1 className="text-2xl md:text-3xl font-bold mb-4 font-figtree">DATOS DEL ASISTENTE</h1>
           <div className="flex items-center gap-3 flex-wrap mb-4">
             <span className="px-3 py-1 rounded-full text-xs md:text-sm font-semibold bg-custom-primary text-white">
-              {agent.tono}
+              {agent.tone}
             </span>
             <span className="text-xs md:text-sm text-custom-text font-medium">
-              {agent.nombre}
+              {agent.name}
             </span>
             <span className="text-xs md:text-sm text-custom-text">
-              {agent.idioma}
-            </span>
-            <span className="text-xs md:text-sm text-custom-text opacity-70">
-              {new Date(agent.createdAt).toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}
+              {agent.language}
             </span>
           </div>
 
@@ -87,7 +80,7 @@ export default function DetalleElemento({ params }: { params: Promise<{ id: stri
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
               <div className="text-2xl font-bold mb-1 text-custom-primary">
-                {agent.short}%
+                {agent.responseLength.short}%
               </div>
               <div className="text-sm text-custom-text">
                 Respuestas Cortas
@@ -95,7 +88,7 @@ export default function DetalleElemento({ params }: { params: Promise<{ id: stri
             </div>
             <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
               <div className="text-2xl font-bold mb-1 text-custom-primary">
-                {agent.medium}%
+                {agent.responseLength.medium}%
               </div>
               <div className="text-sm text-custom-text">
                 Respuestas Medias
@@ -103,7 +96,7 @@ export default function DetalleElemento({ params }: { params: Promise<{ id: stri
             </div>
             <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
               <div className="text-2xl font-bold mb-1 text-custom-primary">
-                {agent.long}%
+                {agent.responseLength.long}%
               </div>
               <div className="text-sm text-custom-text">
                 Respuestas Largas

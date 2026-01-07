@@ -3,22 +3,47 @@
 import { useState, useEffect } from 'react';
 import { Button } from '../ui';
 import { TrainingSectionProps } from '@/app/types';
+import { useAgentStore } from '@/app/store/agentStore';
 
 const TrainingSection = ({ agentId }: TrainingSectionProps) => {
   const [prompts, setPrompts] = useState('');
   const [message, setMessage] = useState<{ type: 'success' | 'error' | null; text: string }>({ type: null, text: '' });
+  const { agents, updateAgent } = useAgentStore();
 
   useEffect(() => {
-    // Cargar prompts guardados desde localStorage
-    const savedPrompts = localStorage.getItem(`training_${agentId}`);
-    if (savedPrompts) {
-      setPrompts(savedPrompts);
+    // Cargar prompts desde el agente en el store o localStorage
+    const agent = agents.find((a) => a.id === agentId);
+    if (agent && agent.rules) {
+      setPrompts(agent.rules);
+      // Sincronizar con localStorage también
+      localStorage.setItem(`training_${agentId}`, agent.rules);
+    } else {
+      // Si no hay en el store, intentar cargar desde localStorage
+      const savedPrompts = localStorage.getItem(`training_${agentId}`);
+      if (savedPrompts) {
+        setPrompts(savedPrompts);
+      }
     }
-  }, [agentId]);
+  }, [agentId, agents]);
 
   const handleSave = () => {
     if (prompts.trim()) {
+      // Guardar en localStorage
       localStorage.setItem(`training_${agentId}`, prompts);
+      
+      // Actualizar el agente en el store con las rules
+      const agent = agents.find((a) => a.id === agentId);
+      if (agent) {
+        updateAgent(agentId, {
+          name: agent.name,
+          language: agent.language,
+          tone: agent.tone,
+          responseLength: agent.responseLength,
+          audioEnabled: agent.audioEnabled,
+          rules: prompts,
+        });
+      }
+      
       setMessage({ type: 'success', text: 'Entrenamiento guardado exitosamente!' });
       
       // Limpiar mensaje después de 3 segundos

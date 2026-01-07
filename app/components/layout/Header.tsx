@@ -1,6 +1,5 @@
 'use client';
 
-import ThemeToggle from '../ui/ThemeToggle';
 import { useAgentStore } from '@/app/store/agentStore';
 
 export default function Header() {
@@ -42,9 +41,6 @@ export default function Header() {
             ></progress>
           </div>
         </div>
-      </div>
-      <div className="me-4">
-        <ThemeToggle />
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">

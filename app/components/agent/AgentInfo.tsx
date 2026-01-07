@@ -11,23 +11,16 @@ const AgentInfo = ({ agent }: AgentInfoProps) => {
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <span className="px-3 py-1 rounded-full text-sm font-semibold bg-custom-primary text-white">
-            {agent.tono}
-          </span>
-          <span className="text-sm text-custom-text">
-            {new Date(agent.createdAt).toLocaleDateString('es-ES', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
+            {agent.tone}
           </span>
         </div>
         
         <h1 className="text-4xl font-bold mb-4 font-figtree">
-          {agent.nombre}
+          {agent.name}
         </h1>
         
         <p className="text-lg leading-relaxed text-custom-text">
-          Agente de IA configurado con idioma {agent.idioma} y tono {agent.tono}
+          Agente de IA configurado con idioma {agent.language} y tono {agent.tone}
         </p>
       </div>
 
@@ -35,7 +28,7 @@ const AgentInfo = ({ agent }: AgentInfoProps) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
           <div className="text-2xl font-bold mb-1 text-custom-primary">
-            {agent.short}%
+            {agent.responseLength.short}%
           </div>
           <div className="text-sm text-custom-text">
             Respuestas Cortas
@@ -43,7 +36,7 @@ const AgentInfo = ({ agent }: AgentInfoProps) => {
         </div>
         <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
           <div className="text-2xl font-bold mb-1 text-custom-primary">
-            {agent.medium}%
+            {agent.responseLength.medium}%
           </div>
           <div className="text-sm text-custom-text">
             Respuestas Medias
@@ -51,7 +44,7 @@ const AgentInfo = ({ agent }: AgentInfoProps) => {
         </div>
         <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
           <div className="text-2xl font-bold mb-1 text-custom-primary">
-            {agent.long}%
+            {agent.responseLength.long}%
           </div>
           <div className="text-sm text-custom-text">
             Respuestas Largas
@@ -65,15 +58,21 @@ const AgentInfo = ({ agent }: AgentInfoProps) => {
           Configuración
         </h2>
         <div className="space-y-2 leading-relaxed text-custom-text">
-          <p><strong>Idioma:</strong> {agent.idioma}</p>
-          <p><strong>Tono:</strong> {agent.tono}</p>
+          <p><strong>Idioma:</strong> {agent.language}</p>
+          <p><strong>Tono:</strong> {agent.tone}</p>
           <p><strong>Audio habilitado:</strong> {agent.audioEnabled ? 'Sí' : 'No'}</p>
           <p><strong>Distribución de respuestas:</strong></p>
           <ul className="list-disc list-inside ml-4">
-            <li>Cortas: {agent.short}%</li>
-            <li>Medias: {agent.medium}%</li>
-            <li>Largas: {agent.long}%</li>
+            <li>Cortas: {agent.responseLength.short}%</li>
+            <li>Medias: {agent.responseLength.medium}%</li>
+            <li>Largas: {agent.responseLength.long}%</li>
           </ul>
+          {agent.rules && (
+            <>
+              <p><strong>Reglas:</strong></p>
+              <p className="whitespace-pre-wrap bg-base-200 p-3 rounded-lg">{agent.rules}</p>
+            </>
+          )}
         </div>
       </div>
     </article>
