@@ -1,65 +1,69 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import Footer from './components/layout/Footer';
+import { CardAgentIa } from './components/cards';
+import { Button } from './components/ui';
+import { ModalNewEgent } from './components/Modals';
+import { useAgentStore } from './store/agentStore';
+import { FiPlus } from "react-icons/fi";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const agents = useAgentStore((state) => state.agents);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Mapear los agentes del store al formato que espera CardAgentIa
+  const mappedAgents = agents.map((agent) => ({
+    id: agent.id,
+    titulo: agent.nombre,
+    language: agent.idioma,
+    type: agent.tono,
+  }));
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen">
+      <div className="mx-auto py-8">
+        <div className="flex my-8 items-center">
+          <h2 className="text-4xl pointer-events-none font-bold mb-4 text-start flex-1">Asistentes IA</h2>
+          <Button buttonProps={{
+            children: 'Agregar Asistente',
+            type: 'button',
+            className: 'btn-primary',
+            disabled: false,
+            loading: false,
+            icon: <FiPlus className="w-4 h-4" />,
+            iconPosition: 'left',
+            iconSize: 16,
+            onClick: handleOpenModal,
+          }}>
+          </Button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        {/* Grid de elementos */}
+        <div className="flex flex-col gap-4">
+          {mappedAgents.length > 0 ? (
+            mappedAgents.map((agent) => (
+              <CardAgentIa key={agent.id} agentData={agent} />
+            ))
+          ) : (
+            <div className="text-center py-12 text-base-content opacity-50 pointer-events-none">
+              <p>No hay asistentes creados aún. ¡Crea tu primer asistente!</p>
+            </div>
+          )}
         </div>
-      </main>
+
+        {mappedAgents.length > 0 && <Footer total={mappedAgents.length} />}
+      </div>
+
+      {/* Modal para crear nuevo agente */}
+      <ModalNewEgent isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 }

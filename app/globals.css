@@ -1,15 +1,34 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #2D3249;
+  --background-secondary: #2D3249;
+  
+  /* Colores personalizados */
+  --color-primary: #EB3B5E;
+  --color-secondary: #54595F;
+  --color-text: #7A7A7A;
+  --color-accent: #61CE70;
+  --color-5f254d4: #FFAA4D;
+  --color-3411872: #25293C;
+  --color-dee4406: #EB3B5E;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-montserrat);
+  --font-figtree: var(--font-figtree);
+  
+  /* Colores personalizados para Tailwind */
+  --color-primary: #6EC1E4;
+  --color-secondary: #54595F;
+  --color-text: #7A7A7A;
+  --color-accent: #61CE70;
+  --color-orange: #FFAA4D;
+  --color-dark: #25293C;
+  --color-pink: #EB3C62;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,6 +40,47 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+/* Clases de utilidad para fuentes */
+.font-figtree {
+  font-family: var(--font-figtree), sans-serif;
+}
+
+.font-montserrat {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+/* Clases de utilidad para colores personalizados */
+.text-custom-text {
+  color: var(--color-text);
+}
+
+.text-custom-primary {
+  color: var(--color-primary);
+}
+
+.text-custom-accent {
+  color: var(--color-accent);
+}
+
+.text-custom-secondary {
+  color: var(--color-secondary);
+}
+
+.bg-custom-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-custom-accent {
+  background-color: var(--color-accent);
+}
+
+.border-custom-primary {
+  border-color: var(--color-primary);
+}
+
+.bg-custom-primary-light {
+  background-color: rgba(110, 193, 228, 0.1);
 }
