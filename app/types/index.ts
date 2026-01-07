@@ -4,12 +4,17 @@ export interface AgentData {
   titulo: string;
   language: string;
   type: string;
+  short: number;
+  medium: number;
+  long: number;
 }
 
 // Modal new agent types
 export interface ModalNewAgentProps {
   isOpen?: boolean;
   onClose?: () => void;
+  onSuccess?: (type: 'success' | 'error', message: string) => void;
+  agentId?: string | null; // Si se proporciona, está en modo edición
 }
 
 // Footer types
@@ -69,4 +74,23 @@ export interface ChatSectionProps {
 // Training Types
 export interface TrainingSectionProps {
   agentId: string;
+}
+
+// Modal Confirmation Types
+export interface ModalConfirmationProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  onConfirm?: () => void;
+  title?: string;
+  message?: string;
+  agentName?: string;
+}
+
+// Modal Result Types
+export interface ModalResultProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  type?: 'success' | 'error';
+  title?: string;
+  message?: string;
 }

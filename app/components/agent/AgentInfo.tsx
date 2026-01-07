@@ -6,7 +6,7 @@ interface AgentInfoProps {
 
 const AgentInfo = ({ agent }: AgentInfoProps) => {
   return (
-    <article className="bg-base-100 rounded-xl p-8 shadow-lg border border-base-300">
+    <article className="bg-[#2D3249] rounded-xl p-8 shadow-none">
       {/* Header */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">

@@ -11,8 +11,24 @@ const steps = [
   { number: 2, title: 'Configuración' },
 ];
 
-const FormNewAgent = () => {
-  const { currentStep, message, setMessage } = useAgentStore();
+interface FormNewAgentProps {
+  agentId?: string | null;
+  onSuccess?: (type: 'success' | 'error', message: string) => void;
+}
+
+const FormNewAgent = ({ agentId = null, onSuccess }: FormNewAgentProps) => {
+  const { currentStep, message, setMessage, agents, loadAgentForEdit } = useAgentStore();
+
+  // Cargar datos del agente si está en modo edición
+  useEffect(() => {
+    if (agentId) {
+      const agent = agents.find((a) => a.id === agentId);
+      if (agent) {
+        loadAgentForEdit(agent);
+      }
+    }
+    // No resetear automáticamente cuando no hay agentId para evitar conflictos
+  }, [agentId]); // Solo dependemos de agentId para evitar loops
 
   // Limpiar mensaje después de 5 segundos
   useEffect(() => {
@@ -40,7 +56,7 @@ const FormNewAgent = () => {
       )}
 
       {currentStep === 1 && <StepOne />}
-      {currentStep === 2 && <StepTwo />}
+      {currentStep === 2 && <StepTwo onSuccess={onSuccess} />}
     </div>
   );
 };

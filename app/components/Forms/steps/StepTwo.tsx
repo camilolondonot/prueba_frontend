@@ -3,8 +3,12 @@
 import { Button } from '../../ui';
 import { useAgentStore } from '@/app/store/agentStore';
 
-const StepTwo = () => {
-  const { formData, errors, updateFormData, clearErrors, setStep, addAgent, resetForm, setMessage } = useAgentStore();
+interface StepTwoProps {
+  onSuccess?: (type: 'success' | 'error', message: string) => void;
+}
+
+const StepTwo = ({ onSuccess }: StepTwoProps) => {
+  const { formData, errors, updateFormData, clearErrors, setStep, addAgent, updateAgent, resetForm, setMessage, editingAgentId } = useAgentStore();
 
   const total = formData.short + formData.medium + formData.long;
   const isTotalValid = total === 100;
@@ -56,7 +60,7 @@ const StepTwo = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateStep2()) {
-      addAgent({
+      const agentData = {
         nombre: formData.nombre,
         idioma: formData.idioma,
         tono: formData.tono,
@@ -64,18 +68,59 @@ const StepTwo = () => {
         medium: formData.medium,
         long: formData.long,
         audioEnabled: formData.audioEnabled,
-      });
-      
-      setMessage('success', 'Agente creado exitosamente!');
-      resetForm();
-      
-      // Cerrar el modal después de un breve delay
-      setTimeout(() => {
-        const modal = document.getElementById('modal_new_agent') as HTMLDialogElement;
-        if (modal) {
-          modal.close();
+      };
+
+      try {
+        if (editingAgentId) {
+          // Modo edición
+          updateAgent(editingAgentId, agentData);
+          const successMessage = 'Agente actualizado exitosamente!';
+          setMessage('success', successMessage);
+          
+          // Cerrar el modal de creación/edición
+          const modal = document.getElementById('modal_new_agent') as HTMLDialogElement;
+          if (modal) {
+            modal.close();
+          }
+          
+          // Mostrar modal de resultado
+          if (onSuccess) {
+            setTimeout(() => {
+              onSuccess('success', successMessage);
+            }, 300);
+          }
+        } else {
+          // Modo creación
+          addAgent(agentData);
+          const successMessage = 'Agente creado exitosamente!';
+          setMessage('success', successMessage);
+          
+          // Cerrar el modal de creación/edición
+          const modal = document.getElementById('modal_new_agent') as HTMLDialogElement;
+          if (modal) {
+            modal.close();
+          }
+          
+          // Mostrar modal de resultado
+          if (onSuccess) {
+            setTimeout(() => {
+              onSuccess('success', successMessage);
+            }, 300);
+          }
         }
-      }, 1500);
+        
+        resetForm();
+      } catch (error) {
+        const errorMessage = 'Ocurrió un error al guardar el agente. Por favor, intenta nuevamente.';
+        setMessage('error', errorMessage);
+        
+        // Mostrar modal de resultado con error
+        if (onSuccess) {
+          setTimeout(() => {
+            onSuccess('error', errorMessage);
+          }, 300);
+        }
+      }
     } else {
       setMessage('error', 'Por favor, corrige los errores antes de guardar.');
     }

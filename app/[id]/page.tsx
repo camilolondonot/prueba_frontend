@@ -62,9 +62,9 @@ export default function DetalleElemento({ params }: { params: Promise<{ id: stri
         </Link>
 
         {/* Header con información del agente */}
-        <div className="bg-base-100 rounded-xl p-6 shadow-lg border border-base-300">
+        <div className="bg-[#2D3249] rounded-xl p-6 shadow-none">
           <h1 className="text-2xl md:text-3xl font-bold mb-4 font-figtree">DATOS DEL ASISTENTE</h1>
-          <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-3 flex-wrap mb-4">
             <span className="px-3 py-1 rounded-full text-xs md:text-sm font-semibold bg-custom-primary text-white">
               {agent.tono}
             </span>
@@ -81,6 +81,34 @@ export default function DetalleElemento({ params }: { params: Promise<{ id: stri
                 day: 'numeric'
               })}
             </span>
+          </div>
+
+          {/* Distribución de respuestas */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
+              <div className="text-2xl font-bold mb-1 text-custom-primary">
+                {agent.short}%
+              </div>
+              <div className="text-sm text-custom-text">
+                Respuestas Cortas
+              </div>
+            </div>
+            <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
+              <div className="text-2xl font-bold mb-1 text-custom-primary">
+                {agent.medium}%
+              </div>
+              <div className="text-sm text-custom-text">
+                Respuestas Medias
+              </div>
+            </div>
+            <div className="p-4 rounded-lg border border-custom-primary bg-custom-primary-light">
+              <div className="text-2xl font-bold mb-1 text-custom-primary">
+                {agent.long}%
+              </div>
+              <div className="text-sm text-custom-text">
+                Respuestas Largas
+              </div>
+            </div>
           </div>
         </div>
 

@@ -22,7 +22,8 @@ const Modal = ({
   return (
     <dialog id={id} className="modal">
       <div 
-        className={`modal-box ${backgroundColor ? { backgroundColor } : 'bg-[#2D3249]'}`}
+        className={`modal-box ${backgroundColor ? '' : 'bg-[#2D3249]'}`}
+        style={backgroundColor ? { backgroundColor } : undefined}
       >
         {showCloseButton && (
           <form method="dialog">

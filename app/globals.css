@@ -84,3 +84,13 @@ body {
 .bg-custom-primary-light {
   background-color: rgba(110, 193, 228, 0.1);
 }
+
+input, textarea, button {
+  outline: none;
+}
+
+.select:focus, .select:focus-within {
+  outline: none;
+  outline-offset: 2px;
+  isolation: isolate;
+}

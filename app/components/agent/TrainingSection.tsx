@@ -34,7 +34,7 @@ const TrainingSection = ({ agentId }: TrainingSectionProps) => {
   };
 
   return (
-    <div className="bg-base-100 rounded-xl p-6 shadow-lg border border-base-300 h-full flex flex-col">
+    <div className="bg-[#2D3249] rounded-xl p-6 shadow-none h-full flex flex-col">
       <h2 className="text-xl font-bold mb-4 font-figtree">Entrenamiento del asistente:</h2>
       
       {message.type && (
@@ -51,9 +51,6 @@ const TrainingSection = ({ agentId }: TrainingSectionProps) => {
           value={prompts}
           onChange={(e) => setPrompts(e.target.value)}
         />
-        <p className="text-xs text-custom-text mt-2 opacity-70">
-          Sólo persistencia de datos en local. Que al refrescar la data permanezca una vez se le da guardar.
-        </p>
       </div>
 
       <div className="flex justify-end mt-4">

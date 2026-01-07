@@ -4,7 +4,7 @@ import { Modal } from '../ui';
 import FormNewAgent from '../Forms/FormNewAgent';
 import { ModalNewAgentProps } from '@/app/types';
 
-const ModalNewAgent = ({ isOpen = false, onClose }: ModalNewAgentProps) => {
+const ModalNewAgent = ({ isOpen = false, onClose, onSuccess, agentId = null }: ModalNewAgentProps) => {
   useEffect(() => {
     const modal = document.getElementById('modal_new_agent') as HTMLDialogElement;
     if (modal) {
@@ -41,8 +41,10 @@ const ModalNewAgent = ({ isOpen = false, onClose }: ModalNewAgentProps) => {
       showCloseButton={true}
       onClose={onClose}
     >
-      <h3 className="font-bold text-lg mb-4 font-figtree">Crear Nuevo Agente</h3>
-      <FormNewAgent />
+      <h3 className="font-bold text-lg mb-4 font-figtree">
+        {agentId ? 'Editar Agente' : 'Crear Nuevo Agente'}
+      </h3>
+      <FormNewAgent agentId={agentId} onSuccess={onSuccess} />
     </Modal>
   );
 };

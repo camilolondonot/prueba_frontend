@@ -68,7 +68,7 @@ const ChatSection = ({ agentId }: ChatSectionProps) => {
   };
 
   return (
-    <div className="bg-base-100 rounded-xl p-6 shadow-lg border border-base-300 h-full flex flex-col">
+    <div className="bg-[#2D3249] rounded-xl p-6 shadow-none h-full flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold font-figtree">CHAT SIMULADO:</h2>
         {messages.length > 0 && (
@@ -82,10 +82,6 @@ const ChatSection = ({ agentId }: ChatSectionProps) => {
           />
         )}
       </div>
-
-      <p className="text-xs text-custom-text mb-4 opacity-70">
-        Las respuestas son completamente simuladas, se pueden obtener de un JSON, deben tener delay para simular el fetch de la data...
-      </p>
 
       {/* Área de mensajes */}
       <div className="flex-1 overflow-y-auto mb-4 p-4 bg-base-200 rounded-lg space-y-3 min-h-[250px] md:min-h-[300px]">
